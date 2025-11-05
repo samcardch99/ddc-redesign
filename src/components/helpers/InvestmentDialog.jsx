@@ -61,66 +61,59 @@ export function InvestmentDialog({ open, onClose, investmentTitle }) {
   }, [open, reset]);
 
   const onSubmit = async (data) => {
+    const templateParams = {
+      from_name: data.name,
+      email: data.email,
+      phone: data.phone,
+      budget: data.budget,
+      funds: data.funds,
+      company: data.company,
+      source: "investments_inside1_dialog",
+    };
     try {
-      const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
-      const templateId = import.meta.env.VITE_EMAILJS_INVESTMENTS_TEMPLATE_ID;
-      const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
-
-      if (!serviceId || !templateId || !publicKey) {
-        throw new Error("Faltan variables de entorno de EmailJS");
-      }
-
-      const templateParams = {
-        from_name: data.name,
-        reply_to: data.email,
-        phone: data.phone,
-        investment_title: investmentTitle,
-        budget: data.budget,
-        funds: data.funds,
-        company: data.company,
-        source: "investments_inside1_dialog",
-      };
-
-      const res = await emailjs.send(serviceId, templateId, templateParams, {
-        publicKey,
-      });
-      if (res?.status === 200) {
-        // ✅ Notificación
-
-        toast.success("Enviado", {
-          description: "Gracias, te contactaremos pronto.",
-        });
-
-        // ✅ 1. Cerrar modal (si aplica) y resetear el formulario
-        onClose?.();
-        reset();
-
-        // ✅ 2. Redirigir a WhatsApp (nuevo tab)
-        const phoneNumber = "17865661632"; // ← Número WhatsApp de la empresa (sin +, con código de país)
-        const message = `
+      const response = await fetch(
+        "https://services.leadconnectorhq.com/hooks/7oU5lsceedkFIPHBdU4t/webhook-trigger/88dfb46e-d9cd-4d8b-84c9-98fe4e2ea450",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(templateParams),
+        }
+      );
+    } catch (error) {
+      toast.error(t("form_send.fail_title"));
+    }
+    try {
+      // ✅ Armar el mensaje para WhatsApp
+      const phoneNumber = "17865661632"; // Número WhatsApp de la empresa (sin +, con código de país)
+      const message = `
 Hola, me gustaría recibir más información sobre inversiones.
 
 📌 *Datos proporcionados:*
 - Nombre: ${data.name}
 - Email: ${data.email}
 - Teléfono: ${data.phone}
-- Proyecto de interés: ${investmentTitle}
 - Presupuesto estimado: ${data.budget}
 - Fondos disponibles: ${data.funds}
-- Empresa/organización: ${data.company}
-      `.trim();
+- Empresa registrada en Estados Unidos?: ${data.company}
+    `.trim();
 
-        const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
-          message
-        )}`;
-        window.open(whatsappURL, "_blank");
-      } else {
-        throw new Error("Respuesta no OK de EmailJS");
-      }
+      // ✅ Crear URL de WhatsApp correctamente codificada
+      const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
+        message
+      )}`;
+
+      // ✅ Redirigir (compatible con móvil, desktop, app, navegador)
+      window.location.href = whatsappURL;
+
+      // ✅ Cerrar modal y resetear formulario (si aplica)
+      onClose?.();
+      reset();
     } catch (err) {
-      console.log(err);
-      toast.error("No se pudo enviar", {
-        description: "Revisa la conexión o configuración e inténtalo de nuevo.",
+      console.error(err);
+      toast.error("No se pudo iniciar WhatsApp", {
+        description: "Intenta nuevamente o verifica tu dispositivo.",
       });
     }
   };

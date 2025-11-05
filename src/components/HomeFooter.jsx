@@ -80,16 +80,21 @@ const HomeFooter = () => {
     };
 
     try {
-      // const response = await fetch(
-      //   "https://services.leadconnectorhq.com/hooks/SO893WxtDOEhijU1IqnZ/webhook-trigger/edcf9d71-bee5-4c51-b4fe-cf85651f1295",
-      //   {
-      //     method: "POST",
-      //     headers: {
-      //       "Content-Type": "application/json",
-      //     },
-      //     body: JSON.stringify(payload),
-      //   }
-      // );
+      const response = await fetch(
+        "https://services.leadconnectorhq.com/hooks/7oU5lsceedkFIPHBdU4t/webhook-trigger/42cc89b9-01f4-4254-b293-216594ae72de",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(payload),
+        }
+      );
+    } catch (error) {
+      toast.error(t("form_send.fail_title"));
+    }
+
+    try {
       if (formRef.current) {
         await emailjs.sendForm(
           import.meta.env.VITE_EMAILJS_SERVICE_ID,
@@ -351,4 +356,3 @@ const HomeFooter = () => {
 };
 
 export default HomeFooter;
-

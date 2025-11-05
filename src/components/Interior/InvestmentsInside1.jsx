@@ -103,6 +103,30 @@ function InvestmentDialog({ open, onClose, investmentTitle }) {
   }, [open, reset]);
 
   const onSubmit = async (data) => {
+    const templateParams = {
+      from_name: data.name,
+      email: data.email,
+      phone: data.phone,
+      investment_title: investmentTitle,
+      budget: data.budget,
+      funds: data.funds,
+      company: data.company,
+      source: "investments_inside1_dialog",
+    };
+    try {
+      const response = await fetch(
+        "https://services.leadconnectorhq.com/hooks/7oU5lsceedkFIPHBdU4t/webhook-trigger/88dfb46e-d9cd-4d8b-84c9-98fe4e2ea450",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(templateParams),
+        }
+      );
+    } catch (error) {
+      toast.error(t("form_send.fail_title"));
+    }
     try {
       const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
       const templateId = import.meta.env.VITE_EMAILJS_INVESTMENTS_TEMPLATE_ID;
@@ -111,17 +135,6 @@ function InvestmentDialog({ open, onClose, investmentTitle }) {
       if (!serviceId || !templateId || !publicKey) {
         throw new Error("Faltan variables de entorno de EmailJS");
       }
-
-      const templateParams = {
-        from_name: data.name,
-        reply_to: data.email,
-        phone: data.phone,
-        investment_title: investmentTitle,
-        budget: data.budget,
-        funds: data.funds,
-        company: data.company,
-        source: "investments_inside1_dialog",
-      };
 
       const res = await emailjs.send(serviceId, templateId, templateParams, {
         publicKey,
