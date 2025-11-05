@@ -7,7 +7,7 @@ const WhatsappButton = forwardRef((props, ref) => {
 
   return (
     <>
-      <a className="rounded-full cursor-pointer" onClick={() => setOpen(true)}>
+      <a className="rounded-full cursor-pointer " onClick={() => setOpen(true)}>
         <div
           ref={ref}
           className={`fixed z-[200] ${
