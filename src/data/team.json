@@ -29,14 +29,7 @@
     "image": "assets/employees/yiseny.jpg",
     "class": ""
   },
-  {
-    "name": "Alejandro Fonticoba",
-    "id": "alejandro_fonticoba",
-    "role": "Project Manager",
-    "description": "Alejandro keeps every DDC build on track. From permitting to punch-list, he aligns architects, engineers, and trades, tracking costs and milestones so modules arrive and assemble without delays. His rigorous oversight safeguards budgets and ensures DDC’s signature quality reaches the site as designed.",
-    "image": "assets/employees/alejandro.jpg",
-    "class": "translate-x-6"
-  },
+
   {
     "name": "Alex Olivares",
     "id": "alex_olivares",

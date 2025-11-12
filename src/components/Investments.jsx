@@ -151,11 +151,10 @@ const Investments = () => {
             {t("investments.button")}
           </PrimaryButton>
         </div>
-        <h2 className="lg:text-xl text-left">
-          {t("investments.subtitle")}
-          <br />
-          <span>(construction-first)</span>
-        </h2>
+        <div className="flex flex-col">
+          <h2 className="lg:text-xl text-left">{t("investments.subtitle")}</h2>
+          <span className="mt-2">(Construction First)</span>
+        </div>
         <PrimaryButton
           href="/investments"
           className="mobile-btn bg-primary mt-6 text-secondary self-center lg:hidden hover:text-primary"
