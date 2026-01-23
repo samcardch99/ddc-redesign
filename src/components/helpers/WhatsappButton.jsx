@@ -17,7 +17,7 @@ const WhatsappButton = forwardRef((props, ref) => {
       <div className="fixed z-[200] right-4 bottom-32 flex flex-col gap-4 items-center">
 
         {/* Botón WhatsApp */}
-        <div className={`w-16 h-16 transition-all duration-500 transform ${menuOpen ? "scale-100 translate-y-0 opacity-100" : "scale-0 translate-y-10 opacity-0 pointer-events-none"
+        <div className={`w-16 h-16 transition-all duration-500 transform ${menuOpen ? "scale-100 translate-y-0 opacity-100" : " translate-y-10 opacity-0 pointer-events-none"
           }`}>
           <a
             href="https://wa.me/+17865661632"
@@ -35,7 +35,7 @@ const WhatsappButton = forwardRef((props, ref) => {
         </div>
 
         {/* Botón Chatbot (Abre el iframe) */}
-        <div className={`w-16 h-16 transition-all duration-500 delay-75 transform ${menuOpen ? "scale-100 translate-y-0 opacity-100" : "scale-0 translate-y-10 opacity-0 pointer-events-none"
+        <div className={`w-16 h-16 transition-all duration-500 delay-75 transform ${menuOpen ? "scale-100 translate-y-0 opacity-100" : " translate-y-10 opacity-0 pointer-events-none"
           }`}>
           <button
             onClick={() => setChatOpen(true)}
