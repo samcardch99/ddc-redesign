@@ -107,20 +107,20 @@ export function InvestmentCardsGrid({ items = [], onAction, className = "" }) {
 
 // Puedes mover esto a tu archivo data.json
 export const sampleData = [
-  {
-    id: "pg-select",
-    title: "Punta Gorda Select",
-    asset_type: "Single family home",
-    construction_term: "9 meses después de permisos",
-    investor_profile: "Inversor doméstico / internacional",
-  },
-  {
-    id: "pg-premium",
-    title: "Punta Gorda Premium",
-    asset_type: "Single family home",
-    construction_term: "9 meses después de permisos",
-    investor_profile: "Inversor doméstico / internacional",
-  },
+  // {
+  //   id: "pg-select",
+  //   title: "Punta Gorda Select",
+  //   asset_type: "Single family home",
+  //   construction_term: "9 meses después de permisos",
+  //   investor_profile: "Inversor doméstico / internacional",
+  // },
+  // {
+  //   id: "pg-premium",
+  //   title: "Punta Gorda Premium",
+  //   asset_type: "Single family home",
+  //   construction_term: "9 meses después de permisos",
+  //   investor_profile: "Inversor doméstico / internacional",
+  // },
   {
     id: "miami-premium",
     title: "Miami Premium ",

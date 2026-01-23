@@ -29,7 +29,6 @@
     "image": "assets/employees/yiseny.jpg",
     "class": ""
   },
-
   {
     "name": "Alex Olivares",
     "id": "alex_olivares",
@@ -44,15 +43,7 @@
     "role": "Marketing & Brand Director",
     "description": "Javi turns ideas into stories people remember. Using clear data and fresh creativity, he builds campaigns that show why DDC’s modular projects stand out. From a social-post to an investor pitch, he keeps every detail polished so clients and partners feel the distinction and quality that define DDC.",
     "image": "assets/employees/javi.jpg",
-    "class": "scale-[1.1] -translate-y-4"
-  },
-  {
-    "name": "Alejandra Rosas",
-    "id": "alejandra_rosas",
-    "role": "Loan Processor",
-    "description": "Alejandra plays a key role in ensuring the financial backbone of each project runs smoothly. With deep knowledge of loan documentation and regulatory processes, she supports our clients and internal teams to streamline approvals and secure reliable financing. Her precision and dedication help bring DDC projects to life with confidence and clarity.",
-    "image": "assets/employees/alejandra.jpg",
-    "class": ""
+    "class": "scale-[1.1] -translate-y-40"
   },
   {
     "name": "Juan Sebastian",
@@ -62,7 +53,6 @@
     "image": "assets/employees/juan.jpg",
     "class": ""
   },
-
   {
     "name": "Lorena Ardila",
     "id": "lorena_ardila",
@@ -79,7 +69,7 @@
     "image": "assets/employees/wilfredo.jpg",
     "class": ""
   },
-    {
+  {
     "name": "Esteban Villavicencio",
     "id": "esteban_villavicencio",
     "role": "Senior Civil Engineer",
@@ -95,15 +85,6 @@
     "image": "assets/employees/tommy.jpg",
     "class": ""
   },
-  
-  {
-    "name": "Blanca Mendoza",
-    "id": "blanca_mendoza",
-    "role": "Sales Associate",
-    "description": "Blanca transforms interest into well-informed decisions. She manages lead follow-up, property showings, and investor touchpoints with clarity and warmth, ensuring each step is organized and stress-free. Aligned with our Sales Director’s strategy, she maintains spotless pipelines and proactive communication so clients feel the distinction and quality that define DDC.",
-    "image": "assets/employees/blanca.jpg",
-    "class": ""
-  },
   {
     "name": "Anisleidy Valle",
     "id": "anisleidy_valle",
@@ -111,8 +92,21 @@
     "description": "Blanca transforms interest into well-informed decisions. She manages lead follow-up, property showings, and investor touchpoints with clarity and warmth, ensuring each step is organized and stress-free. Aligned with our Sales Director’s strategy, she maintains spotless pipelines and proactive communication so clients feel the distinction and quality that define DDC.",
     "image": "assets/employees/anisleidy.jpg",
     "class": ""
+  },
+  {
+    "name": "Alejandro Gomez",
+    "id": "alejandro_gomez",
+    "role": "Project Manager",
+    "description": " Alejandro Gomez is a Project Manager at DDC, leading modular construction with a disciplined blend of financial rigor and on site execution. Trained as an economist, he manages construction budgets, cost control, inventory, and quality assurance across the full project lifecycle. By aligning operational cadence with precise financial oversight, Alejandro keeps projects efficient, predictable, and on budget, turning complex builds into streamlined, tightly controlled outcomes that meet DDC’s highest standards.",
+    "image": "assets/employees/alejandro_gomez.jpg",
+    "class": ""
+  },
+  {
+    "name": "Rosario Gomez",
+    "id": "rosario_gomez",
+    "role": "Project Manager",
+    "description": "Rosario ensures every operation and real estate project runs smoothly from start to finish. With a strong focus on planning and control, she connects teams, processes, and execution, playing a key role in keeping DDC’s operations efficient, coordinated, and consistently reliable.",
+    "image": "assets/employees/rosario.jpg",
+    "class": "object-center"
   }
-  
-  
 ]
-

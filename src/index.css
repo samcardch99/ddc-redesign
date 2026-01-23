@@ -10,7 +10,8 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: #c2c7cf; /* Cambia el color de la fuente */
+  color: #c2c7cf;
+  /* Cambia el color de la fuente */
 }
 
 #root {
@@ -33,13 +34,14 @@ body {
   overflow-x: hidden;
 }
 
-img:not([src$=".svg"], [src$=".png"]) {
-  @apply shadow-[12px_16px_28px_-8px_rgba(0,0,0,0.35),_4px_6px_10px_-6px_rgba(0,0,0,0.25)];
-}
+/* img:not([src$=".svg"], [src$=".png"]) {
+  @apply shadow-[12px_16px_28px_-8px_rgba(0, 0, 0, 0.35), _4px_6px_10px_-6px_rgba(0, 0, 0, 0.25)];
+} */
 
 .cover {
   position: relative;
-  overflow: hidden; /* asegura que el ::before no se salga */
+  overflow: hidden;
+  /* asegura que el ::before no se salga */
   --bg-y: 0vh;
 }
 
@@ -47,34 +49,41 @@ img:not([src$=".svg"], [src$=".png"]) {
   content: "";
   position: absolute;
   inset: 0;
-  @apply md:bg-[url("/bg/bg.webp")] bg-[url("/bg/bg_mobile.jpg")];
+  @apply md:bg-[url("/bg/bg1.webp")] bg-[url("/bg/bg1.webp")];
   background-size: cover;
   background-position: center;
-  filter: brightness(35%);
-  transform: translate3d(0, var(--bg-y), 0) scale(1.3); /* parallax */
+  filter: brightness(45%);
+  transform: translate3d(0, var(--bg-y), 0) scale(1.3);
+  /* parallax */
   will-change: transform;
-  z-index: -1; /* detrás del contenido */
+  z-index: -1;
+  /* detrás del contenido */
   pointer-events: none;
 }
 
 @media (max-width: 768px) {
   .cover::before {
-    transform: translate3d(20%, var(--bg-y), 0) scale(1.4); /* parallax */
+    transform: translate3d(20%, var(--bg-y), 0) scale(1.4);
+    /* parallax */
   }
 }
 
 .stroke-text {
-  -webkit-text-stroke: 1px #c2c7cf; /* grosor y color del contorno */
-  color: transparent; /* sin relleno */
+  -webkit-text-stroke: 1px #c2c7cf;
+  /* grosor y color del contorno */
+  color: transparent;
+  /* sin relleno */
 }
 
 #header.is-dark {
-  mix-blend-mode: normal; /* deja de invertir */
+  mix-blend-mode: normal;
+  /* deja de invertir */
   @apply text-secondary;
 }
 
 #header.is-clear {
-  mix-blend-mode: normal; /* deja de invertir */
+  mix-blend-mode: normal;
+  /* deja de invertir */
   @apply text-primary;
 }
 
@@ -104,22 +113,30 @@ img:not([src$=".svg"], [src$=".png"]) {
 
 /* Ocultar scrollbars */
 .no-scrollbar::-webkit-scrollbar {
-  display: none; /* Chrome, Safari, Opera */
+  display: none;
+  /* Chrome, Safari, Opera */
 }
+
 .no-scrollbar {
-  -ms-overflow-style: none; /* IE y Edge */
-  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;
+  /* IE y Edge */
+  scrollbar-width: none;
+  /* Firefox */
 }
+
 /* global.css / styles.css */
 .swiper-projects .swiper-slide {
-  pointer-events: none; /* desactiva clicks en todas */
+  pointer-events: none;
+  /* desactiva clicks en todas */
   z-index: 1;
 }
 
 .swiper-projects .swiper-slide-active,
 .swiper-projects .swiper-slide-duplicate-active {
-  pointer-events: auto; /* solo la activa recibe el click */
-  z-index: 50; /* por si acaso, súbela */
+  pointer-events: auto;
+  /* solo la activa recibe el click */
+  z-index: 50;
+  /* por si acaso, súbela */
   cursor: pointer;
 }
 
@@ -166,24 +183,30 @@ textarea {
 }
 
 .projects-pagination {
-  line-height: 0; /* compacta verticalmente */
+  line-height: 0;
+  /* compacta verticalmente */
 }
 
 /* Bullets como barras */
 .projects-pagination .swiper-pagination-bullet {
   width: 1rem;
   height: 0.25rem;
-  border-radius: 9999px; /* totalmente redondeado */
-  background: #7b8794; /* gris azulado (inactivo) */
-  opacity: 0.35; /* tenue para inactivo */
-  margin: 0 6px !important; /* separación uniforme */
+  border-radius: 9999px;
+  /* totalmente redondeado */
+  background: #7b8794;
+  /* gris azulado (inactivo) */
+  opacity: 0.35;
+  /* tenue para inactivo */
+  margin: 0 6px !important;
+  /* separación uniforme */
   transition: transform 0.25s ease, opacity 0.25s ease,
     background-color 0.25s ease, width 0.25s ease;
 }
 
 /* Activo más oscuro y un pelín más ancho */
 .projects-pagination .swiper-pagination-bullet-active {
-  background: #203247; /* azul oscuro (activo) */
+  background: #203247;
+  /* azul oscuro (activo) */
   opacity: 1;
   width: 1rem;
 }
@@ -208,6 +231,7 @@ textarea {
 #our-projects select option {
   @apply bg-primary text-secondary;
 }
+
 .PhotoView-Slider__Backdrop {
   background: rgba(15, 25, 49, 1) !important;
   filter: brightness(0.5);

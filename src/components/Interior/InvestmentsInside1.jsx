@@ -14,22 +14,22 @@ import emailjs from "@emailjs/browser"; // npm i @emailjs/browser
 import { useTranslation } from "react-i18next";
 
 /* -------------------- DATA -------------------- */
-const items_left = [
-  {
-    title: "Punta Gorda Select",
-    asset_type: "Single family home",
-    construction_term: "9 meses después de permisos",
-    investor_profile: "Inversor doméstico / internacional",
-    className: "w-fit -translate-y-[20%]",
-  },
-  {
-    title: "Punta Gorda Premium",
-    asset_type: "Single family home",
-    construction_term: "9 meses después de permisos",
-    investor_profile: "Inversor doméstico / internacional",
-    className: "w-fit translate-y-[35%]",
-  },
-];
+// const items_left = [
+//   {
+//     title: "Punta Gorda Select",
+//     asset_type: "Single family home",
+//     construction_term: "9 meses después de permisos",
+//     investor_profile: "Inversor doméstico / internacional",
+//     className: "w-fit -translate-y-[20%]",
+//   },
+//   {
+//     title: "Punta Gorda Premium",
+//     asset_type: "Single family home",
+//     construction_term: "9 meses después de permisos",
+//     investor_profile: "Inversor doméstico / internacional",
+//     className: "w-fit translate-y-[35%]",
+//   },
+// ];
 
 const items_right = [
   {
@@ -379,27 +379,7 @@ const InvestmentsInside1 = () => {
       <Header className={"is-clear"} />
 
       <div className="flex gap-2 lg:scale-75 xl:scale-100 justify-center items-center h-[80vh]">
-        <div className="flex flex-col ">
-          {items_left.map((card, i) => {
-            return (
-              <InvestmentCard
-                key={`left-${i}`}
-                title={card.title}
-                className={card.className}
-                asset_type={t(
-                  `investments_inside.card.content.${i + 1}.active`
-                )}
-                construction_term={t(
-                  `investments_inside.card.content.${i + 1}.time`
-                )}
-                investor_profile={t(
-                  `investments_inside.card.content.${i + 1}.profile`
-                )}
-                onAction={() => handleOpen(card.title)}
-              />
-            );
-          })}
-        </div>
+
 
         <img
           className="h-full object-contain"
