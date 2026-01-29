@@ -496,6 +496,10 @@
       "rosario_gomez": {
         "role": "Operations Manager",
         "description": "Rosario ensures every operation and real estate project runs smoothly from start to finish. With a strong focus on planning and control, she connects teams, processes, and execution, playing a key role in keeping DDC’s operations efficient, coordinated, and consistently reliable."
+      },
+      "mateo_correa_hernandez": {
+        "role": "Finance Manager",
+        "description": "Mateo strengthens DDC’s financial operations through accounting management, treasury oversight, and the coordination of disbursements with financial institutions. With a focus on efficiency and control, he helps optimize processes, ensure resource availability, and support key decision making, contributing to stronger results across every project."
       }
     }
   },
