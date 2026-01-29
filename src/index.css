@@ -49,7 +49,7 @@ body {
   content: "";
   position: absolute;
   inset: 0;
-  @apply md:bg-[url("/bg/bg1.webp")] bg-[url("/bg/bg1.webp")];
+  @apply md:bg-[url("/bg/bg11.webp")] bg-[url("/bg/bg12.jpg")];
   background-size: cover;
   background-position: center;
   filter: brightness(45%);
