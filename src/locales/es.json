@@ -412,9 +412,9 @@
         "role": "Procesadora de Préstamos",
         "description": "Alejandra asegura que el respaldo financiero de cada proyecto funcione sin contratiempos. Con conocimiento profundo en documentación y procesos regulatorios, facilita aprobaciones y financiamiento seguro para clientes y equipos."
       },
-      "juan_sebastian": {
+      "liliana_patiño": {
         "role": "Coordinador de Transacciones",
-        "description": "Juan garantiza que cada operación inmobiliaria fluya sin obstáculos. Con atención al detalle y enfoque en el cliente, une contratos, cronogramas y cierres, siendo clave para negociaciones sin fricciones en DDC."
+        "description": "Liliana garantiza que cada operación inmobiliaria fluya sin obstáculos. Con atención al detalle y enfoque en el cliente, une contratos, cronogramas y cierres, siendo clave para negociaciones sin fricciones en DDC."
       },
       "lorena_ardila": {
         "role": "Planificadora de Marketing",
@@ -544,6 +544,8 @@
       "subtitle": "Plan seleccionado: ",
       "name": "Nombre",
       "name_placeholder": "Tu Nombre",
+      "country_placeholder": "Selecciona tu país",
+      "country": "País",
       "mail": "Correo",
       "mail_placeholder": "Tu Correo",
       "phone": "Teléfono",

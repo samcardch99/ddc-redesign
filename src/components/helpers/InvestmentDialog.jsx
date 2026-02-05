@@ -1,16 +1,32 @@
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { z } from "zod";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
-import emailjs from "@emailjs/browser"; // npm i @emailjs/browser
+import Select from "react-select";
+
+// Importación y registro de base de datos de países
+import countries from "i18n-iso-countries";
+import es from "i18n-iso-countries/langs/es.json";
+import en from "i18n-iso-countries/langs/en.json";
+
+countries.registerLocale(es);
+countries.registerLocale(en);
 
 export function InvestmentDialog({ open, onClose, investmentTitle }) {
   const panelRef = useRef(null);
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
-  /* -------------------- Dialog con Zod + RHF + EmailJS -------------------- */
+  // Generar lista de países dinámicamente según el idioma actual del sitio
+  const countryOptions = useMemo(() => {
+    const lang = i18n.language.startsWith("es") ? "es" : "en";
+    const list = countries.getNames(lang, { select: "official" });
+    return Object.entries(list)
+      .map(([code, name]) => ({ value: code, label: name }))
+      .sort((a, b) => a.label.localeCompare(b.label));
+  }, [i18n.language]);
+
   const dialogSchema = z.object({
     name: z
       .string()
@@ -22,11 +38,18 @@ export function InvestmentDialog({ open, onClose, investmentTitle }) {
       .min(3, t("investments_inside.form.validation.email.required")),
     phone: z
       .string()
-      .regex(
-        /^[0-9+()\-\s]{7,20}$/,
-        t("investments_inside.form.validation.phone")
-      ),
-    // ✅ nuevos campos obligatorios
+      .regex(/^[0-9+()\-\s]{7,20}$/, t("investments_inside.form.validation.phone")),
+    // Validación de objeto para React-Select
+    country: z
+      .object(
+        {
+          value: z.string(),
+          label: z.string(),
+        },
+        { required_error: t("investments_inside.form.validation.select") }
+      )
+      .nullable()
+      .refine((val) => val !== null, t("investments_inside.form.validation.select")),
     budget: z.string().min(1, t("investments_inside.form.validation.select")),
     funds: z.string().min(1, t("investments_inside.form.validation.select")),
     company: z.string().min(1, t("investments_inside.form.validation.select")),
@@ -36,6 +59,7 @@ export function InvestmentDialog({ open, onClose, investmentTitle }) {
     register,
     handleSubmit,
     reset,
+    control,
     formState: { errors, isSubmitting },
   } = useForm({
     resolver: zodResolver(dialogSchema),
@@ -43,11 +67,43 @@ export function InvestmentDialog({ open, onClose, investmentTitle }) {
       name: "",
       email: "",
       phone: "",
+      country: null,
       budget: "",
       funds: "",
       company: "",
     },
   });
+
+  // Estilos personalizados para React-Select (Tema oscuro/minimalista)
+  const selectStyles = {
+    control: (base, state) => ({
+      ...base,
+      backgroundColor: "transparent",
+      borderColor: state.isFocused ? "white" : "rgba(255,255,255,0.4)",
+      borderRadius: "0",
+      padding: "2px",
+      color: "white",
+      boxShadow: "none",
+      cursor: "pointer",
+      "&:hover": { borderColor: "white" },
+    }),
+    menu: (base) => ({
+      ...base,
+      backgroundColor: "#1E1F20",
+      borderRadius: "0",
+      zIndex: 1000,
+    }),
+    option: (base, state) => ({
+      ...base,
+      backgroundColor: state.isFocused ? "rgba(255,255,255,0.1)" : "transparent",
+      color: "white",
+      cursor: "pointer",
+      "&:active": { backgroundColor: "rgba(255,255,255,0.2)" },
+    }),
+    singleValue: (base) => ({ ...base, color: "white" }),
+    input: (base) => ({ ...base, color: "white" }),
+    placeholder: (base) => ({ ...base, color: "rgba(255,255,255,0.5)", fontSize: "1rem" }),
+  };
 
   useEffect(() => {
     if (!open) return;
@@ -65,56 +121,46 @@ export function InvestmentDialog({ open, onClose, investmentTitle }) {
       from_name: data.name,
       email: data.email,
       phone: data.phone,
+      country: data.country.label,
       budget: data.budget,
       funds: data.funds,
       company: data.company,
       source: "investments_inside1_dialog",
     };
+
     try {
-      const response = await fetch(
+      // 1. Envío al Webhook de LeadConnector
+      await fetch(
         "https://services.leadconnectorhq.com/hooks/7oU5lsceedkFIPHBdU4t/webhook-trigger/88dfb46e-d9cd-4d8b-84c9-98fe4e2ea450",
         {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify(templateParams),
         }
       );
-    } catch (error) {
-      toast.error(t("form_send.fail_title"));
-    }
-    try {
-      // ✅ Armar el mensaje para WhatsApp
-      const phoneNumber = "17865661632"; // Número WhatsApp de la empresa (sin +, con código de país)
+
+      // 2. Redirección a WhatsApp con los datos codificados
+      const phoneNumber = "17865661632";
       const message = `
 Hola, me gustaría recibir más información sobre inversiones.
 
 📌 *Datos proporcionados:*
 - Nombre: ${data.name}
+- País: ${data.country.label}
 - Email: ${data.email}
 - Teléfono: ${data.phone}
 - Presupuesto estimado: ${data.budget}
 - Fondos disponibles: ${data.funds}
-- Empresa registrada en Estados Unidos?: ${data.company}
-    `.trim();
+- Empresa registrada en US: ${data.company}
+      `.trim();
 
-      // ✅ Crear URL de WhatsApp correctamente codificada
-      const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
-        message
-      )}`;
-
-      // ✅ Redirigir (compatible con móvil, desktop, app, navegador)
+      const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
       window.location.href = whatsappURL;
 
-      // ✅ Cerrar modal y resetear formulario (si aplica)
       onClose?.();
       reset();
-    } catch (err) {
-      console.error(err);
-      toast.error("No se pudo iniciar WhatsApp", {
-        description: "Intenta nuevamente o verifica tu dispositivo.",
-      });
+    } catch (error) {
+      toast.error(t("form_send.fail_title"));
     }
   };
 
@@ -127,16 +173,14 @@ Hola, me gustaría recibir más información sobre inversiones.
       aria-modal="true"
       role="dialog"
       data-lenis-prevent
-      aria-labelledby="investment-dialog-title"
     >
       <div
         ref={panelRef}
         onClick={(e) => e.stopPropagation()}
         className="relative w-[92vw] max-w-[520px] max-h-[90vh] overflow-y-auto bg-primary text-secondary p-6 sm:p-8 shadow-2xl rounded-none"
       >
-        {/* Cerrar */}
+        {/* Botón Cerrar */}
         <button
-          aria-label="Cerrar"
           onClick={onClose}
           className="absolute top-3 right-3 h-8 w-8 grid place-items-center text-secondary/80 hover:text-secondary"
         >
@@ -151,30 +195,23 @@ Hola, me gustaría recibir más información sobre inversiones.
             strokeLinecap="round"
             strokeLinejoin="round"
             className="h-5 w-5 text-secondary"
-            aria-hidden="true"
           >
             <path d="M18 6L6 18M6 6l12 12" />
           </svg>
         </button>
 
-        <h3
-          id="investment-dialog-title"
-          className="text-2xl font-semibold tracking-tight"
-        >
+        <h3 className="text-2xl font-semibold tracking-tight">
           {t("investments_inside.form.title")}
         </h3>
         <p className="mt-1 text-sm opacity-80">
-          {t("investments_inside.form.subtitle")}
+          {t("investments_inside.form.subtitle")}{" "}
           <span className="font-medium">{investmentTitle}</span>
         </p>
 
         <form onSubmit={handleSubmit(onSubmit)} className="mt-6 space-y-5">
           {/* Nombre */}
           <div className="flex flex-col gap-2">
-            <label
-              htmlFor="name"
-              className="text-xs uppercase tracking-wide opacity-80"
-            >
+            <label htmlFor="name" className="text-xs uppercase tracking-wide opacity-80">
               {t("investments_inside.form.name")}
             </label>
             <input
@@ -186,18 +223,13 @@ Hola, me gustaría recibir más información sobre inversiones.
               autoFocus
             />
             {errors.name && (
-              <span className="text-rose-400 text-xs">
-                {errors.name.message}
-              </span>
+              <span className="text-rose-400 text-xs">{errors.name.message}</span>
             )}
           </div>
 
           {/* Email */}
           <div className="flex flex-col gap-2">
-            <label
-              htmlFor="email"
-              className="text-xs uppercase tracking-wide opacity-80"
-            >
+            <label htmlFor="email" className="text-xs uppercase tracking-wide opacity-80">
               {t("investments_inside.form.mail")}
             </label>
             <input
@@ -208,18 +240,37 @@ Hola, me gustaría recibir más información sobre inversiones.
               placeholder={t("investments_inside.form.mail_placeholder")}
             />
             {errors.email && (
-              <span className="text-rose-400 text-xs">
-                {errors.email.message}
-              </span>
+              <span className="text-rose-400 text-xs">{errors.email.message}</span>
             )}
           </div>
 
-          {/* Phone */}
+          {/* País (Nuevo Campo) */}
           <div className="flex flex-col gap-2">
-            <label
-              htmlFor="phone"
-              className="text-xs uppercase tracking-wide opacity-80"
-            >
+            <label className="text-xs uppercase tracking-wide opacity-80">
+              {t("investments_inside.form.country") || "País de residencia"}
+            </label>
+            <Controller
+              name="country"
+              control={control}
+              render={({ field }) => (
+                <Select
+                  {...field}
+                  options={countryOptions}
+                  styles={selectStyles}
+                  placeholder={t("investments_inside.form.country_placeholder") || "Selecciona tu país"}
+                  isSearchable={true}
+                  noOptionsMessage={() => "No se encontraron resultados"}
+                />
+              )}
+            />
+            {errors.country && (
+              <span className="text-rose-400 text-xs">{errors.country.message}</span>
+            )}
+          </div>
+
+          {/* Teléfono */}
+          <div className="flex flex-col gap-2">
+            <label htmlFor="phone" className="text-xs uppercase tracking-wide opacity-80">
               {t("investments_inside.form.phone")}
             </label>
             <input
@@ -230,11 +281,11 @@ Hola, me gustaría recibir más información sobre inversiones.
               placeholder={t("investments_inside.form.phone_placeholder")}
             />
             {errors.phone && (
-              <span className="text-rose-400 text-xs">
-                {errors.phone.message}
-              </span>
+              <span className="text-rose-400 text-xs">{errors.phone.message}</span>
             )}
           </div>
+
+          {/* Pregunta 1: Presupuesto */}
           <div className="flex flex-col gap-2">
             <label className="text-sm font-medium">
               {t("investments_inside.form.first_select")}
@@ -245,20 +296,18 @@ Hola, me gustaría recibir más información sobre inversiones.
                 "$300,000 – $500,000",
                 t("investments_inside.form.first_select_3"),
               ].map((opt) => (
-                <label key={opt} className="flex items-center gap-2">
-                  <input type="radio" value={opt} {...register("budget")} />
-                  {opt}
+                <label key={opt} className="flex items-center gap-2 cursor-pointer hover:opacity-80">
+                  <input type="radio" value={opt} {...register("budget")} className="accent-secondary" />
+                  <span className="text-sm">{opt}</span>
                 </label>
               ))}
             </div>
             {errors.budget && (
-              <span className="text-rose-400 text-xs">
-                {errors.budget.message}
-              </span>
+              <span className="text-rose-400 text-xs">{errors.budget.message}</span>
             )}
           </div>
 
-          {/* Pregunta 2 */}
+          {/* Pregunta 2: Fondos */}
           <div className="flex flex-col gap-2">
             <label className="text-sm font-medium">
               {t("investments_inside.form.second_select")}
@@ -269,20 +318,18 @@ Hola, me gustaría recibir más información sobre inversiones.
                 t("investments_inside.form.second_select_2"),
                 t("investments_inside.form.second_select_3"),
               ].map((opt) => (
-                <label key={opt} className="flex items-center gap-2">
-                  <input type="radio" value={opt} {...register("funds")} />
-                  {opt}
+                <label key={opt} className="flex items-center gap-2 cursor-pointer hover:opacity-80">
+                  <input type="radio" value={opt} {...register("funds")} className="accent-secondary" />
+                  <span className="text-sm">{opt}</span>
                 </label>
               ))}
             </div>
             {errors.funds && (
-              <span className="text-rose-400 text-xs">
-                {errors.funds.message}
-              </span>
+              <span className="text-rose-400 text-xs">{errors.funds.message}</span>
             )}
           </div>
 
-          {/* Pregunta 3 */}
+          {/* Pregunta 3: Empresa */}
           <div className="flex flex-col gap-2">
             <label className="text-sm font-medium">
               {t("investments_inside.form.third_select")}
@@ -293,25 +340,23 @@ Hola, me gustaría recibir más información sobre inversiones.
                 t("investments_inside.form.third_select_2"),
                 t("investments_inside.form.third_select_3"),
               ].map((opt) => (
-                <label key={opt} className="flex items-center gap-2">
-                  <input type="radio" value={opt} {...register("company")} />
-                  {opt}
+                <label key={opt} className="flex items-center gap-2 cursor-pointer hover:opacity-80">
+                  <input type="radio" value={opt} {...register("company")} className="accent-secondary" />
+                  <span className="text-sm">{opt}</span>
                 </label>
               ))}
             </div>
             {errors.company && (
-              <span className="text-rose-400 text-xs">
-                {errors.company.message}
-              </span>
+              <span className="text-rose-400 text-xs">{errors.company.message}</span>
             )}
           </div>
 
-          {/* Botón */}
+          {/* Botón Submit */}
           <div className="pt-2 flex items-center gap-3">
             <button
               type="submit"
               disabled={isSubmitting}
-              className="px-5 py-3 bg-[#1E1F20] rounded-full text-primary ring-1 ring-white/20 shadow-[inset_0_1px_0_rgba(255,255,255,0.25)] hover:bg-secondary/20 hover:text-secondary transition-colors duration-200 disabled:opacity-60"
+              className="px-8 py-3 bg-[#1E1F20] rounded-full text-primary ring-1 ring-white/20 shadow-[inset_0_1px_0_rgba(255,255,255,0.25)] hover:bg-secondary/20 hover:text-secondary transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed"
             >
               {isSubmitting
                 ? t("investments_inside.form.button_sending")

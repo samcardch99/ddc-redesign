@@ -64,9 +64,9 @@
       "role": "Loan Processor",
       "description": "Alejandra plays a key role in ensuring the financial backbone of each project runs smoothly. With deep knowledge of loan documentation and regulatory processes, she supports our clients and internal teams to streamline approvals and secure reliable financing. Her precision and dedication help bring DDC projects to life with confidence and clarity."
     },
-    "juan_sebastian": {
+    "liliana_patiño": {
       "role": "Transaction Coordinator",
-      "description": "Juan ensures every real estate transaction runs smoothly from start to finish. With strong attention to detail and client coordination, he bridges the gap between contracts, timelines, and closing processes. His commitment to clarity and execution makes him a key player in delivering seamless deals at DDC."
+      "description": "Liliana ensures every real estate transaction runs smoothly from start to finish. With strong attention to detail and client coordination, he bridges the gap between contracts, timelines, and closing processes. His commitment to clarity and execution makes him a key player in delivering seamless deals at DDC."
     },
     "stephanie_parra": {
       "role": "Account Manager",
@@ -461,9 +461,9 @@
         "role": "Loan Processor",
         "description": "Alejandra plays a key role in ensuring the financial backbone of each project runs smoothly. With deep knowledge of loan documentation and regulatory processes, she supports our clients and internal teams to streamline approvals and secure reliable financing. Her precision and dedication help bring DDC projects to life with confidence and clarity."
       },
-      "juan_sebastian": {
+      "liliana_patiño": {
         "role": "Transaction Coordinator",
-        "description": "Juan ensures every real estate transaction runs smoothly from start to finish. With strong attention to detail and client coordination, he bridges the gap between contracts, timelines, and closing processes. His commitment to clarity and execution makes him a key player in delivering seamless deals at DDC."
+        "description": "Liliana ensures every real estate transaction runs smoothly from start to finish. With strong attention to detail and client coordination, he bridges the gap between contracts, timelines, and closing processes. His commitment to clarity and execution makes him a key player in delivering seamless deals at DDC."
       },
       "lorena_ardila": {
         "role": "Marketing Planner",
@@ -593,6 +593,8 @@
       "subtitle": "Selected Plan: ",
       "name": "Name",
       "name_placeholder": "Your Name",
+      "country_placeholder": "Select your country",
+      "country": "Country",
       "mail": "Mail",
       "mail_placeholder": "Your Mail",
       "phone": "Phone",

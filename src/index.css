@@ -236,3 +236,10 @@ textarea {
   background: rgba(15, 25, 49, 1) !important;
   filter: brightness(0.5);
 }
+
+.css-hlgwow,
+.css-iifwgf,
+.css-1b7rztd-indicatorContainer {
+  padding: 0 !important;
+  margin: 0 !important;
+}

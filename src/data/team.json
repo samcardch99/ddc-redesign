@@ -22,6 +22,14 @@
     "image": "assets/employees/israel.jpg"
   },
   {
+    "name": "Javi Ferrer",
+    "id": "javi_ferrer",
+    "role": "Sales Director",
+    "description": "Javi turns ideas into stories people remember. Using clear data and fresh creativity, he builds campaigns that show why DDC’s modular projects stand out. From a social-post to an investor pitch, he keeps every detail polished so clients and partners feel the distinction and quality that define DDC.",
+    "image": "assets/employees/javi.jpg",
+    "class": "scale-[1.1] -translate-y-40"
+  },
+  {
     "name": "Yiseny Anzola",
     "id": "yiseny_anzola",
     "role": "Business Developer",
@@ -38,19 +46,11 @@
     "class": ""
   },
   {
-    "name": "Javi Ferrer",
-    "id": "javi_ferrer",
-    "role": "Sales Director",
-    "description": "Javi turns ideas into stories people remember. Using clear data and fresh creativity, he builds campaigns that show why DDC’s modular projects stand out. From a social-post to an investor pitch, he keeps every detail polished so clients and partners feel the distinction and quality that define DDC.",
-    "image": "assets/employees/javi.jpg",
-    "class": "scale-[1.1] -translate-y-40"
-  },
-  {
-    "name": "Juan Sebastian",
-    "id": "juan_sebastian",
+    "name": "Liliana Patiño",
+    "id": "liliana_patiño",
     "role": "Transaction Coordinator",
-    "description": "Juan ensures every real estate transaction runs smoothly from start to finish. With strong attention to detail and client coordination, he bridges the gap between contracts, timelines, and closing processes. His commitment to clarity and execution makes him a key player in delivering seamless deals at DDC.",
-    "image": "assets/employees/juan.jpg",
+    "description": "Liliana ensures every real estate transaction runs smoothly from start to finish. With strong attention to detail and client coordination, she bridges the gap between contracts, timelines, and closing processes. Her commitment to clarity and execution makes her a key player in delivering seamless deals at DDC.",
+    "image": "assets/employees/liliana.jpg",
     "class": ""
   },
   {
