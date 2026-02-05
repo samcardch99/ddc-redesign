@@ -76,6 +76,10 @@
     "fail_title": "Error enviando formulario"
   },
   "projectDetails": {
+    "Villa_Sunset": {
+      "distribution": "5 Habitaciones ● 4 Baños",
+      "description": "Residencia de arquitectura distintiva, renovada en 2026, ubicada en el corazón de Glenvar Heights, donde el diseño contemporáneo preserva cuidadosamente el carácter original y la autenticidad de la propiedad. Ofreciendo 4,459 pies cuadrados de espacio interior cuidadosamente seleccionado, esta casa ofrece una experiencia de vida verdaderamente única para compradores que aprecian el diseño atemporal y la privacidad. La renovación respetó y resaltó elementos originales, incluyendo una auténtica bodega que añade identidad y un lujo discreto raramente encontrado hoy en día. Amplias áreas sociales con excelente flujo interior-exterior, cinco dormitorios y cuatro baños, incluyendo un dormitorio en planta baja ideal para invitados o una oficina privada. Piscina, terrazas y paisajismo maduro crean un refugio sereno a pocos minutos de los destinos clave de Miami. Construcción sólida de concreto, techo de metal y ventanas de impacto. Una propiedad única para quienes buscan más que un hogar: carácter, historia y valor duradero."
+    },
     "Villa_Victor": {
       "distribution": "5 Habitaciones ● 5 Baños",
       "description": "Villa Victor combina una arquitectura elegante con serenidad tropical. Su fachada oscura contrasta con acentos de madera cálida, creando un estilo moderno y audaz. En el interior, los espacios abiertos y la luz natural definen un estilo de vida refinado, mientras que la terraza con piscina privada ofrece un escape acogedor, diseñado tanto para relajarse como para entretener."
@@ -246,6 +250,9 @@
   },
   "project_details": {
     "project_description": {
+      "Villa_Sunset": {
+        "description": "Residencia de arquitectura distintiva, renovada en 2026, ubicada en el corazón de Glenvar Heights, donde el diseño contemporáneo preserva cuidadosamente el carácter original y la autenticidad de la propiedad. Ofreciendo 4,459 pies cuadrados de espacio interior cuidadosamente seleccionado, esta casa ofrece una experiencia de vida verdaderamente única para compradores que aprecian el diseño atemporal y la privacidad. La renovación respetó y resaltó elementos originales, incluyendo una auténtica bodega que añade identidad y un lujo discreto raramente encontrado hoy en día. Amplias áreas sociales con excelente flujo interior-exterior, cinco dormitorios y cuatro baños, incluyendo un dormitorio en planta baja ideal para invitados o una oficina privada. Piscina, terrazas y paisajismo maduro crean un refugio sereno a pocos minutos de los destinos clave de Miami. Construcción sólida de concreto, techo de metal y ventanas de impacto. Una propiedad única para quienes buscan más que un hogar: carácter, historia y valor duradero."
+      },
       "Villa_Anzola": {
         "description": "Un refugio arquitectónico a medida en Lehigh Acres, Florida. Esta refinada casa tropical combina texturas naturales con líneas contemporáneas y amplios espacios al aire libre, ofreciendo una experiencia exclusiva donde cada detalle está diseñado para la distinción, la comodidad y la sofisticación atemporal."
       },
