@@ -511,6 +511,14 @@
       "daniela_marichal": {
         "role": "Permit Runner",
         "description": "Daniela is the vital link between our projects and local authorities. She navigates the complexities of municipal bureaucracy with speed and precision, ensuring all permits and documentation are processed without delay. Her proactive coordination keeps our construction timelines on track, allowing DDC to maintain its commitment to rapid and compliant modular delivery."
+      },
+      "dany_rodriguez": {
+        "role": "Superintendent",
+        "description": "Dany brings a keen, vigilant perspective to the construction site, transforming blueprints into physical structures with unwavering attention to detail. His watchful eyes oversee every trade, ensuring that the highest standards of quality are maintained at every phase."
+      },
+      "gonzalo_jimenez": {
+        "role": "Superintendent",
+        "description": "Gonzalo channels decades of on-site experience into ensuring that DDC’s vision becomes a flawlessly executed reality. He translates ambitious architectural plans into actionable daily construction tasks, maintaining momentum and clarity from groundbreaking to completion."
       }
     }
   },

@@ -462,6 +462,14 @@
       "daniela_marichal": {
         "role": "Encargada de Permisos",
         "description": "Daniela es el enlace vital entre nuestros proyectos y las autoridades locales. Navega la complejidad de la burocracia municipal con rapidez y precisión, asegurando que todos los permisos y la documentación se procesen sin demora. Su coordinación proactiva mantiene los plazos de construcción de DDC encaminados, permitiendo que la empresa cumpla con su compromiso de entrega modular rápida y conforme a la normativa."
+      },
+      "dany_rodriguez": {
+        "role": "Superintendente",
+        "description": "Dany aporta una perspectiva aguda y vigilante al sitio de construcción, transformando planos en estructuras físicas con una atención inquebrantable al detalle. Sus ojos vigilantes supervisan cada oficio, asegurando que los más altos estándares de calidad se mantengan en cada fase."
+      },
+      "gonzalo_jimenez": {
+        "role": "Superintendente",
+        "description": "Gonzalo canaliza décadas de experiencia en el sitio para asegurar que la visión de DDC se convierta en una realidad ejecutada impecablemente. Traduce planes arquitectónicos ambiciosos en tareas de construcción diarias accionables, manteniendo el impulso y la claridad desde la inauguración hasta la finalización."
       }
     }
   },
