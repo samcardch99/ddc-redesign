@@ -2,13 +2,12 @@ import React, { forwardRef, useState } from "react";
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 import { useTranslation } from "react-i18next";
 
-
-
 const WhatsappButton = forwardRef((props, ref) => {
+  // Mantenemos los estados por si los necesitas en un futuro, 
+  // aunque ya no controlan la visibilidad del botón de WhatsApp
   const [menuOpen, setMenuOpen] = useState(false);
   const [chatOpen, setChatOpen] = useState(false);
   const { t, i18n } = useTranslation();
-
 
   // Función para cerrar todo
   const closeAll = () => {
@@ -18,28 +17,26 @@ const WhatsappButton = forwardRef((props, ref) => {
 
   return (
     <>
-      {/* --- BOTONES SECUNDARIOS (Desplegables) --- */}
+      {/* --- BOTÓN WHATSAPP DIRECTO --- */}
+      {/* Se ha ajustado la posición a bottom-8 para que ocupe el lugar principal */}
+      <div className="fixed z-[201] right-4 bottom-8 lg:bottom-12">
+        <a
+          href="https://wa.me/+17865661632"
+          target="_blank"
+          rel="noreferrer"
+          className="w-14 h-14 bg-white rounded-full shadow-lg flex items-center justify-center hover:scale-110 transition-transform"
+        >
+          <DotLottieReact
+            src="/assets/lottie/whatsapp_animated_dark.lottie"
+            loop
+            autoplay
+            className="w-14 h-14" // Ajustado el tamaño para que luzca bien en el círculo de 20
+          />
+        </a>
+      </div>
+
+      {/* --- BOTONES SECUNDARIOS Y OTROS (COMENTADOS) --- 
       <div className="fixed z-[200] right-8 bottom-32 flex flex-col gap-4 items-center">
-
-        {/* Botón WhatsApp */}
-        <div className={`w-12 h-12 transition-all duration-500 transform ${menuOpen ? "scale-100 translate-y-0 opacity-100" : " translate-y-10 opacity-0 pointer-events-none"
-          }`}>
-          <a
-            href="https://wa.me/+17865661632"
-            target="_blank"
-            rel="noreferrer"
-            className="w-12 h-12 bg-white rounded-full shadow-lg flex items-center justify-center hover:scale-110 transition-transform"
-          >
-            <DotLottieReact
-              src="/assets/lottie/whatsapp_animated_dark.lottie"
-              loop
-              autoplay
-
-            />
-          </a>
-        </div>
-
-        {/* Botón Chatbot (Abre el iframe) */}
         <div className={`hidden w-12 h-12 transition-all duration-500 delay-75 transform ${menuOpen ? "scale-100 translate-y-0 opacity-100" : " translate-y-10 opacity-0 pointer-events-none"
           }`}>
           <button
@@ -54,8 +51,9 @@ const WhatsappButton = forwardRef((props, ref) => {
           </button>
         </div>
       </div>
+      */}
 
-      {/* --- BOTÓN PRINCIPAL (Trigger) --- */}
+      {/* --- BOTÓN PRINCIPAL TRIGGER (COMENTADO) --- 
       <button
         onClick={() => setMenuOpen(!menuOpen)}
         className={`rounded-full fixed z-[201] right-4 bottom-8 lg:bottom-12 w-20 h-20 flex items-center justify-center transition-all duration-500 ${menuOpen ? "rotate-45 scale-90" : "hover:scale-110"
@@ -68,8 +66,9 @@ const WhatsappButton = forwardRef((props, ref) => {
           autoplay
         />
       </button>
+      */}
 
-      {/* --- OVERLAY E IFRAME DEL CHAT --- */}
+      {/* --- OVERLAY E IFRAME DEL CHAT (COMENTADO) --- 
       <div
         className={`fixed inset-0 z-[300] ${chatOpen ? "visible opacity-100 bg-black/50" : "invisible opacity-0"
           } transition-all duration-300`}
@@ -82,7 +81,6 @@ const WhatsappButton = forwardRef((props, ref) => {
         >
           <iframe
             key={i18n.language}
-            // Añadimos ?chatSession= seguido del idioma para separar las sesiones
             src={
               i18n.language?.startsWith("en")
                 ? "https://n8n.ddcdevelopments.com/webhook/1129330b-4416-4e70-b32a-eaceeaade7ff/chat?chatSession=en"
@@ -93,6 +91,7 @@ const WhatsappButton = forwardRef((props, ref) => {
           />
         </div>
       </div>
+      */}
     </>
   );
 });
