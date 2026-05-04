@@ -7,55 +7,63 @@ import React, {
 } from "react";
 import AnimatedBackground from "../Background/AnimatedBackground";
 import Footer from "../Footer";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import Header from "../Header";
 import projects from "../../data/villas.json"; // [{ id, title, image, year, location }...]
 import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { useTranslation } from "react-i18next";
 
-// Variantes framer-motion
-const containerV = {
-  hidden: {},
-  visible: { transition: { staggerChildren: 0.06, when: "beforeChildren" } },
-};
-const cardV = {
-  hidden: { opacity: 0, y: 18, scale: 0.98 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    scale: 1,
-    transition: { duration: 0.45, ease: [0.22, 1, 0.36, 1] },
-  },
-  exit: {
-    opacity: 0,
-    y: 10,
-    scale: 0.98,
-    transition: { duration: 0.25, ease: [0.4, 0, 1, 1] },
-  },
-};
+
+const FILTER_KEY = "projectsFilter";
+
+function loadFilter() {
+  try {
+    const saved = sessionStorage.getItem(FILTER_KEY);
+    return saved ? JSON.parse(saved) : null;
+  } catch {
+    return null;
+  }
+}
+
+function saveFilter(state) {
+  try {
+    sessionStorage.setItem(FILTER_KEY, JSON.stringify(state));
+  } catch {}
+}
 
 export default function ProjectsInside() {
-  const [query, setQuery] = useState("");
-  const [matchMode, setMatchMode] = useState("contains"); // "contains" | "exact"
-  const [view, setView] = useState("grid"); // "grid" | "list"
-  const [location, setLocation] = useState("All");
+  const saved = loadFilter();
+  const [query, setQuery] = useState(saved?.query ?? "");
+  const [matchMode, setMatchMode] = useState(saved?.matchMode ?? "contains");
+  const [view, setView] = useState(saved?.view ?? "grid");
+  const [location, setLocation] = useState(saved?.location ?? "");
   const { t } = useTranslation();
+  const navigate = useNavigate();
+
   const handleProjectClick = (projectId) => {
-    window.location.href = `/projects/${projectId}`;
+    saveFilter({ query, matchMode, view, location });
+    navigate(`/projects/${projectId}`);
   };
-  // ===== Scroll al top absoluto cuando cambien filtros/vista/búsqueda =====
+  const firstMountRef = useRef(true);
   useEffect(() => {
+    firstMountRef.current = false;
+  }, []);
+
+  // Persistir filtros en sessionStorage cada vez que cambian
+  useEffect(() => {
+    if (firstMountRef.current) return;
+    saveFilter({ query, matchMode, view, location });
+  }, [query, matchMode, view, location]);
+
+  // ===== Scroll al top cuando cambien filtros/vista/búsqueda (no en mount) =====
+  useEffect(() => {
+    if (firstMountRef.current) return;
     const raf = requestAnimationFrame(() => {
       window.scrollTo({ top: 0, behavior: "smooth" });
     });
     return () => cancelAnimationFrame(raf);
   }, [view, location, matchMode, query]);
-
-  const firstMountRef = useRef(true);
-  useEffect(() => {
-    firstMountRef.current = false;
-  }, []);
 
   // Normaliza: inyecta location si falta
   const normalized = useMemo(
@@ -78,7 +86,7 @@ export default function ProjectsInside() {
           : matchMode === "exact"
           ? title === q
           : title.includes(q);
-      const locOk = location === "All" ? true : p.location === location;
+      const locOk = location === "All" || location === "" ? true : p.location === location;
       return nameOk && locOk;
     });
   }, [normalized, query, matchMode, location]);
@@ -175,7 +183,7 @@ export default function ProjectsInside() {
                 <select
                   className="appearance-none cursor-pointer bg-transparent border relative border-white/20 text-primary rounded-full w-fit pl-2 pr-8 py-3 text-sm text-dark_blue"
                   onChange={(e) => setLocation(e.target.value)}
-                  defaultValue="" // para forzar selección inicial vacía
+                  value={location}
                 >
                   <option value="" disabled className="!text-slate-400">
                     {t("projects_inside.location")}
@@ -202,111 +210,79 @@ export default function ProjectsInside() {
         {/* Render: GRID o LIST */}
         <div className="px-8 pb-32 min-h-screen">
           {view === "grid" ? (
-            <motion.div
-              key="grid"
-              variants={containerV}
-              initial="hidden"
-              animate="visible"
-              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10"
-            >
-              <AnimatePresence mode="popLayout">
-                {filtered.map((p, index) => {
-                  // En lg son 3 columnas. Es borde derecho si (index+1) % 3 === 0
-                  // Además, si la última fila está incompleta, el último item también es borde derecho.
-                  const isRightEdgeLg =
-                    isLg &&
-                    ((index + 1) % 3 === 0 || index === filtered.length - 1);
-
-                  return (
-                    <motion.button
-                      onClick={() => handleProjectClick(p.folder)}
-                      layout
-                      key={p.id}
-                      variants={cardV}
-                      initial={firstMountRef.current ? false : "hidden"}
-                      whileInView="visible"
-                      exit="exit"
-                      viewport={{ amount: 0.35, margin: "0px 0px -10% 0px" }}
-                      className="group aspect-video p-3 relative"
-                    >
-                      {/* ← Añadimos no-sign dinámicamente SOLO en lg cuando es borde derecho */}
-                      <span
-                        className={`${
-                          isLg && "hidden"
-                        } left-span absolute -bottom-4 lg:-bottom-4 left-0 lg:-left-5 -translate-x-1/2 text-primary opacity-40 text-2xl `}
-                      >
-                        +
-                      </span>
-
-                      <span
-                        className={`right-span absolute -bottom-4 lg:-bottom-4 right-0 lg:-right-5 translate-x-1/2 text-primary opacity-40 text-2xl ${
-                          isRightEdgeLg ? "no-sign" : ""
-                        }`}
-                      >
-                        +
-                      </span>
-
-                      <div className="overflow-hidden shadow-[0_18px_35px_-10px_rgba(0,0,0,.45)]">
-                        <img
-                          src={p.image}
-                          alt={p.name}
-                          loading="lazy"
-                          decoding="async"
-                          className="h-[180px] sm:h-[200px] md:h-[220px] lg:aspect-video lg:h-full w-full object-cover transition-transform duration-300 ease-out group-hover:scale-[1.03]"
-                        />
-                      </div>
-
-                      <div className="mt-3 flex items-center justify-between border-b border-primary text-primary">
-                        <span className="font-semibold">{p.name}</span>
-                        <span className="text-sm opacity-80">2025</span>
-                      </div>
-                      <h3 className="mt-1 text-xs w-fit absolute right-0 pr-3 text-white/60">
-                        {p.location}
-                      </h3>
-                    </motion.button>
-                  );
-                })}
-              </AnimatePresence>
-            </motion.div>
-          ) : (
-            <motion.div
-              key="list"
-              layout
-              variants={containerV}
-              initial="hidden"
-              animate="visible"
-              className="grid grid-cols-1 gap-4"
-            >
-              <AnimatePresence mode="popLayout">
-                {filtered.map((p) => (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10">
+              {filtered.map((p, index) => {
+                const isRightEdgeLg =
+                  isLg &&
+                  ((index + 1) % 3 === 0 || index === filtered.length - 1);
+                return (
                   <motion.button
                     onClick={() => handleProjectClick(p.folder)}
-                    layout
                     key={p.id}
-                    variants={cardV}
-                    initial="hidden"
-                    whileInView="visible"
-                    exit="exit"
-                    viewport={{ amount: 0.4, margin: "-10% 0px -10% 0px" }}
-                    className="group grid grid-cols-1 gap-4 items-center "
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1, transition: { duration: 0.3 } }}
+                    className="group aspect-video p-3 relative"
                   >
-                    <div className="flex w-full pb-2 justify-between">
-                      <span className="font-bold text-lg text-primary transition-colors duration-300">
-                        {p.name}
-                      </span>
-                      <div className="flex flex-col items-end gap-2">
-                        <span className="text-sm text-primary transition-opacity duration-300 ">
-                          {p.location}
-                        </span>
-                        <span className="text-sm text-primary transition-opacity duration-300">
-                          2025
-                        </span>
-                      </div>
+                    <span
+                      className={`${
+                        isLg && "hidden"
+                      } left-span absolute -bottom-4 lg:-bottom-4 left-0 lg:-left-5 -translate-x-1/2 text-primary opacity-40 text-2xl`}
+                    >
+                      +
+                    </span>
+                    <span
+                      className={`right-span absolute -bottom-4 lg:-bottom-4 right-0 lg:-right-5 translate-x-1/2 text-primary opacity-40 text-2xl ${
+                        isRightEdgeLg ? "no-sign" : ""
+                      }`}
+                    >
+                      +
+                    </span>
+                    <div className="overflow-hidden shadow-[0_18px_35px_-10px_rgba(0,0,0,.45)]">
+                      <img
+                        src={p.image}
+                        alt={p.name}
+                        loading="lazy"
+                        decoding="async"
+                        className="h-[180px] sm:h-[200px] md:h-[220px] lg:aspect-video lg:h-full w-full object-cover transition-transform duration-300 ease-out group-hover:scale-[1.03]"
+                      />
                     </div>
+                    <div className="mt-3 flex items-center justify-between border-b border-primary text-primary">
+                      <span className="font-semibold">{p.name}</span>
+                      <span className="text-sm opacity-80">2025</span>
+                    </div>
+                    <h3 className="mt-1 text-xs w-fit absolute right-0 pr-3 text-white/60">
+                      {p.location}
+                    </h3>
                   </motion.button>
-                ))}
-              </AnimatePresence>
-            </motion.div>
+                );
+              })}
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 gap-4">
+              {filtered.map((p) => (
+                <motion.button
+                  onClick={() => handleProjectClick(p.folder)}
+                  key={p.id}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1, transition: { duration: 0.3 } }}
+                  className="group grid grid-cols-1 gap-4 items-center"
+                >
+                  <div className="flex w-full pb-2 justify-between">
+                    <span className="font-bold text-lg text-primary transition-colors duration-300">
+                      {p.name}
+                    </span>
+                    <div className="flex flex-col items-end gap-2">
+                      <span className="text-sm text-primary transition-opacity duration-300">
+                        {p.location}
+                      </span>
+                      <span className="text-sm text-primary transition-opacity duration-300">
+                        2025
+                      </span>
+                    </div>
+                  </div>
+                </motion.button>
+              ))}
+            </div>
           )}
 
           {filtered.length === 0 && (

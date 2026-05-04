@@ -65,12 +65,21 @@ const Projects = () => {
   const [topValue, setTopValue] = useState(0);
   const [bottomValue, setBottomValue] = useState(0);
   const [isDesktop, setIsDesktop] = useState(false);
+  const [isMd, setIsMd] = useState(false);
   const { t } = useTranslation();
   useSplitWords(".split-words");
   useLayoutEffect(() => {
     const mq = window.matchMedia("(min-width: 1024px)");
     const onChange = (e) => setIsDesktop(e.matches);
     setIsDesktop(mq.matches);
+    mq.addEventListener("change", onChange);
+    return () => mq.removeEventListener("change", onChange);
+  }, []);
+
+  useLayoutEffect(() => {
+    const mq = window.matchMedia("(min-width: 637px) and (max-width: 1023px)");
+    const onChange = (e) => setIsMd(e.matches);
+    setIsMd(mq.matches);
     mq.addEventListener("change", onChange);
     return () => mq.removeEventListener("change", onChange);
   }, []);
@@ -110,23 +119,43 @@ const Projects = () => {
       id="projects"
       className="w-full h-screen flex items-center justify-center px-8 bg-primary relative"
     >
-      <h1 className="split-words absolute left-0 top-28 text-4xl font-bold mb-8 px-8 text-secondary">
+      <h1 className="split-words absolute left-0 top-28 md-custom:top-24 lg:top-28 text-4xl font-bold mb-8 px-8 text-secondary">
         {t("projects.title")}
       </h1>
-      <div className="relative w-full lg:w-[34%] aspect-video text-secondary">
-        <span className="absolute -top-4 lg:-top-8 left-0 -translate-x-1/2 -translate-y-1/2  opacity-40 text-2xl">
+      <div className="relative w-full md-custom:w-[59%] lg:w-[35%] aspect-video text-secondary">
+        <span className="absolute -top-5 md-custom:-top-6 lg:-top-8 left-0 -translate-x-1/2 -translate-y-1/2  opacity-40 text-2xl">
           +
         </span>
-        <span className="absolute -top-4 lg:-top-8 right-0 translate-x-1/2 -translate-y-1/2 opacity-40 text-2xl">
+        <span className="absolute -top-5 md-custom:-top-6 lg:-top-8 right-0 translate-x-1/2 -translate-y-1/2 opacity-40 text-2xl">
           +
         </span>
-        <span className="absolute -bottom-4 lg:-bottom-8 left-0 -translate-x-1/2 translate-y-1/2  opacity-40 text-2xl">
+        <span className="absolute -bottom-5 md-custom:-bottom-6 lg:-bottom-8 left-0 -translate-x-1/2 translate-y-1/2  opacity-40 text-2xl">
           +
         </span>
-        <span className="absolute -bottom-4 lg:-bottom-8 right-0 translate-x-1/2 translate-y-1/2  opacity-40 text-2xl">
+        <span className="absolute -bottom-5 md-custom:-bottom-6 lg:-bottom-8 right-0 translate-x-1/2 translate-y-1/2  opacity-40 text-2xl">
           +
         </span>
-        <div className="absolute h-px w-[90%] left-1/2 -translate-x-1/2 translate-y-1/2 bg-secondary -bottom-4 lg:-bottom-8" />
+        <div className="absolute h-px w-[90%] left-1/2 -translate-x-1/2 translate-y-1/2 bg-secondary -bottom-5 md-custom:-bottom-6 lg:-bottom-8" />
+        <div className=" projects-pagination absolute  !-bottom-2 lg:!-bottom-4 md-custom:!-bottom-3 translate-y-1/2 self-center !left-1/2 !-translate-x-1/2 flex justify-center" />
+
+        <div
+          className="flex absolute left-1/2 -translate-x-1/2 -bottom-12 md-custom:-bottom-12 lg:-bottom-14 w-full translate-y-1/2 items-center justify-between text-secondary"
+          aria-live="polite"
+        >
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={current?.id ?? active}
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8 }}
+              transition={{ duration: 0.15, ease: "easeOut" }}
+              className="w-full flex items-center justify-between"
+            >
+              <span className="font-bold text-xl">{current?.title ?? "—"}</span>
+              <span className="text-xl opacity-80">2025</span>
+            </motion.div>
+          </AnimatePresence>
+        </div>
       </div>
       <button className="hidden lg:block projects-prev z-40 text-secondary absolute left-[20%] top-1/2 -translate-y-1/2 hover:scale-110 hover:bg-gray-300 rounded-full cursor-pointer transition-all duration-300">
         <span className="sr-only">Prev</span>{" "}
@@ -167,7 +196,7 @@ const Projects = () => {
       </button>
       <Swiper
         modules={[EffectCoverflow, Pagination, Autoplay, Navigation]}
-        className="w-[90%] lg:w-[55%]  !absolute !top-1/2 !left-1/2 !-translate-x-1/2 -translate-y-1/2 swiper-projects"
+        className="w-[90%] md-custom:w-[60%] md-custom:max-h-[50vh] lg:max-h-max lg:w-[55%] 2xl-custom:w-[50%]  !absolute !top-1/2 !left-1/2 !-translate-x-1/2 -translate-y-1/2 swiper-projects"
         centeredSlides={true}
         loop
         loopAdditionalSlides={1}
@@ -195,8 +224,7 @@ const Projects = () => {
           el: ".projects-pagination",
           clickable: true,
           renderBullet: (index, className) =>
-            `<span class="${className}" aria-label="Ir al slide ${
-              index + 1
+            `<span class="${className}" aria-label="Ir al slide ${index + 1
             }"></span>`,
         }}
       >
@@ -217,62 +245,20 @@ const Projects = () => {
           </SwiperSlide>
         ))}
       </Swiper>
+
+
+
       <div
+        className="lg:hidden absolute left-1/2 -translate-x-1/2"
         style={{
-          bottom: isDesktop
-            ? `calc(50% - (((60vw * 0.337 ) / 2 )))` // ≥ 1024px
-            : `calc(50% - (((90vw * 0.506 * 2) / 2 )))`, // < 1024px
+          bottom: isMd
+            ? `calc(30% - (((60vw * 0.506) / 2)))` // md: swiper es 60vw
+            : `calc(30% - (((90vw * 0.506) / 2)))`, // mobile: swiper es 90vw
         }}
-        className=" projects-pagination absolute  bottom-6 flex justify-center"
-      />
-
-      {/* Contenedor meta sincronizado con transición */}
-      <div
-        style={{ bottom: `calc(50% - (((90vw * 0.506 * 1.8) / 2 )))` }}
-        className="absolute w-4/5 left-1/2 -translate-x-1/2 -translate-y-1/2 flex lg:hidden items-center justify-between text-secondary"
-        aria-live="polite"
-      >
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={current?.id ?? active}
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.15, ease: "easeOut" }}
-            className="w-full flex items-center justify-between"
-          >
-            <span className="font-bold">{current?.title ?? "—"}</span>
-            <span className="text-sm opacity-80">2025</span>
-          </motion.div>
-        </AnimatePresence>
-      </div>
-      <div
-        style={{ bottom: `calc(50% - (((60vw * 0.337 * 1.4) / 2 )))` }}
-        className="hidden lg:flex absolute w-[33%] left-1/2 -translate-x-1/2 bottom-[20%] lg:-translate-y-1/2 items-center justify-between text-secondary"
-        aria-live="polite"
-      >
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={current?.id ?? active}
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.15, ease: "easeOut" }}
-            className="w-full flex items-center justify-between"
-          >
-            <span className="font-bold text-xl">{current?.title ?? "—"}</span>
-            <span className="text-xl opacity-80">2025</span>
-          </motion.div>
-        </AnimatePresence>
-      </div>
-
-      <div
-        className="lg:hidden absolute  bottom-1/4 left-1/2 -translate-x-1/2 "
-        style={{ bottom: `calc(25% - (((90vw * 0.506 ) / 2 )))` }}
       >
         <PrimaryButton
           href="/projects"
-          className="bg-secondary font-normal !px-4 !py-4 text-lg  hover:text-secondary"
+          className="bg-secondary !px-4 !py-4 text-lg  hover:text-secondary font-bold"
         >
           {t("projects.button")}
         </PrimaryButton>

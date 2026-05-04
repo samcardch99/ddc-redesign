@@ -7,6 +7,7 @@ export default {
   theme: {
     extend: {
       screens: {
+        'md-custom': '637px',
         'md-860px': '860px',
         '2xl-prev': '1440px', // Define un nuevo breakpoint para un ancho mínimo de 2000px
 
