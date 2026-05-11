@@ -218,7 +218,7 @@ export default function ProjectsInside() {
                 return (
                   <motion.button
                     onClick={() => handleProjectClick(p.folder)}
-                    key={p.id}
+                    key={p.folder}
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1, transition: { duration: 0.3 } }}
                     className="group aspect-video p-3 relative"
@@ -262,7 +262,7 @@ export default function ProjectsInside() {
               {filtered.map((p) => (
                 <motion.button
                   onClick={() => handleProjectClick(p.folder)}
-                  key={p.id}
+                  key={p.folder}
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1, transition: { duration: 0.3 } }}
                   className="group grid grid-cols-1 gap-4 items-center"
