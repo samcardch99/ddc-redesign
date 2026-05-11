@@ -108,7 +108,7 @@ export default function ProjectDetails() {
 
   // Persistir selección en localStorage cada vez que cambia
   useEffect(() => {
-    try { localStorage.setItem(`photoMode_${projectId}`, photoMode); } catch {}
+    try { localStorage.setItem(`photoMode_${projectId}`, photoMode); } catch { }
   }, [photoMode, projectId]);
 
   useEffect(() => {
@@ -233,9 +233,8 @@ export default function ProjectDetails() {
                     <button
                       type="button"
                       onClick={() => setPhotoMode("renders")}
-                      className={`flex items-center gap-1.5 py-1 rounded-lg text-sm font-semibold transition-colors ${
-                        photoMode === "renders" ? "text-primary" : "text-grey/50 hover:bg-white/20"
-                      }`}
+                      className={`flex items-center gap-1.5 py-1 rounded-lg text-sm font-semibold transition-colors ${photoMode === "renders" ? "text-primary" : "text-grey/50 hover:bg-white/20"
+                        }`}
                     >
                       {/* Cubo 3D — evoca render/perspectiva */}
                       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
@@ -249,9 +248,8 @@ export default function ProjectDetails() {
                     <button
                       type="button"
                       onClick={() => setPhotoMode("reales")}
-                      className={`flex items-center gap-1.5 py-1 rounded-lg text-sm font-semibold transition-colors ${
-                        photoMode === "reales" ? "text-primary" : "text-grey/50 hover:bg-white/20"
-                      }`}
+                      className={`flex items-center gap-1.5 py-1 rounded-lg text-sm font-semibold transition-colors ${photoMode === "reales" ? "text-primary" : "text-grey/50 hover:bg-white/20"
+                        }`}
                     >
                       {/* Cámara — fotos reales */}
                       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
