@@ -380,7 +380,9 @@
       }
     },
     "bathrooms": "Bathrooms",
-    "bedrooms": "Bedrooms"
+    "bedrooms": "Bedrooms",
+    "renders": "Renders",
+    "reales": "Real"
   },
   "investments": {
     "title": "Why invest with DDC Developments?",

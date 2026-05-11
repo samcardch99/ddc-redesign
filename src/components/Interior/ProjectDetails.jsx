@@ -80,21 +80,36 @@ const cardV = {
 };
 
 export default function ProjectDetails() {
+  const { projectId } = useParams();
+  const { pathname } = useLocation();
   const [query, setQuery] = useState("");
   const [matchMode, setMatchMode] = useState("contains");
   const [view, setView] = useState("grid");
   const [location, setLocation] = useState("All");
-  const { projectId } = useParams();
-  const { pathname } = useLocation();
+  const [photoMode, setPhotoMode] = useState(() => {
+    try { return localStorage.getItem(`photoMode_${projectId}`) || "renders"; } catch { return "renders"; }
+  });
   const { t } = useTranslation();
   const project = useMemo(
     () => projects.find((p) => p.folder === projectId) ?? null,
     [projectId]
   );
 
+  // Al cambiar de proyecto, cargar el modo guardado (o "renders" por defecto)
   useEffect(() => {
+    try {
+      const saved = localStorage.getItem(`photoMode_${projectId}`);
+      setPhotoMode(saved || "renders");
+    } catch {
+      setPhotoMode("renders");
+    }
     window.scrollTo(0, 0);
   }, [projectId, pathname]);
+
+  // Persistir selección en localStorage cada vez que cambia
+  useEffect(() => {
+    try { localStorage.setItem(`photoMode_${projectId}`, photoMode); } catch {}
+  }, [photoMode, projectId]);
 
   useEffect(() => {
     const raf = requestAnimationFrame(() => {
@@ -121,8 +136,8 @@ export default function ProjectDetails() {
         q.length === 0
           ? true
           : matchMode === "exact"
-          ? title === q
-          : title.includes(q);
+            ? title === q
+            : title.includes(q);
       const locOk = location === "All" ? true : p.location === location;
       return nameOk && locOk;
     });
@@ -207,63 +222,99 @@ export default function ProjectDetails() {
                   `project_details.project_description.${project.folder}.description`
                 )}
               </motion.p>
+
+              {/* Toggle Renders / Reales — solo si el proyecto tiene fotos reales */}
+              {project.total_real_images && (
+                <motion.div
+                  variants={fadeUpV}
+                  className="w-full flex justify-end mt-4"
+                >
+                  <div className="flex items-center gap-2 text-white">
+                    <button
+                      type="button"
+                      onClick={() => setPhotoMode("renders")}
+                      className={`flex items-center gap-1.5 py-1 rounded-lg text-sm font-semibold transition-colors ${
+                        photoMode === "renders" ? "text-primary" : "text-grey/50 hover:bg-white/20"
+                      }`}
+                    >
+                      {/* Cubo 3D — evoca render/perspectiva */}
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
+                        <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+                        <polyline points="3.27 6.96 12 12.01 20.73 6.96" />
+                        <line x1="12" y1="22.08" x2="12" y2="12" />
+                      </svg>
+                      {t("project_details.renders")}
+                    </button>
+                    <span className="text-primary/50">/</span>
+                    <button
+                      type="button"
+                      onClick={() => setPhotoMode("reales")}
+                      className={`flex items-center gap-1.5 py-1 rounded-lg text-sm font-semibold transition-colors ${
+                        photoMode === "reales" ? "text-primary" : "text-grey/50 hover:bg-white/20"
+                      }`}
+                    >
+                      {/* Cámara — fotos reales */}
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
+                        <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
+                        <circle cx="12" cy="13" r="4" />
+                      </svg>
+                      {t("project_details.reales")}
+                    </button>
+                  </div>
+                </motion.div>
+              )}
             </div>
           </div>
         </motion.div>
 
         {/* ===== GRID: aparece después y anima cada tarjeta con stagger ===== */}
-        <motion.div
-          key="grid"
-          variants={gridV}
-          initial="hidden"
-          animate="visible"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
-          className="px-8 pb-32 min-h-screen"
-        >
+        <AnimatePresence mode="wait">
           <motion.div
-            variants={{ visible: { transition: { staggerChildren: 0.06 } } }}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10"
+            key={`${project.folder}-${photoMode}`}
+            variants={gridV}
+            initial="hidden"
+            animate="visible"
+            exit={{ opacity: 0, y: 8, transition: { duration: 0.2, ease: [0.4, 0, 1, 1] } }}
+            className="px-8 pb-32 min-h-screen"
           >
-            <AnimatePresence mode="popLayout">
+            <motion.div
+              variants={{ visible: { transition: { staggerChildren: 0.06 } } }}
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10"
+            >
               <PhotoProvider>
-                {[...Array(project.total_images)].map((_, index) => {
+                {[...Array(photoMode === "reales" ? project.total_real_images : project.total_images)].map((_, index) => {
                   const isRightEdgeLg = isLg && (index + 1) % 3 === 0;
+                  const src = photoMode === "reales"
+                    ? `/assets/images/${project.folder}/Reales/${index + 1}.jpg`
+                    : `/assets/images/${project.folder}/${index + 1}.jpeg`;
 
                   return (
                     <motion.article
                       layout
-                      key={`${project.folder}-${index}`}
+                      key={`${project.folder}-${photoMode}-${index}`}
                       variants={cardV}
-                      initial="visible"
+                      initial="hidden"
+                      animate="visible"
                       className="group aspect-video p-3 relative cursor-pointer"
                     >
                       <span
-                        className={`${
-                          isLg && "hidden"
-                        } left-span absolute -bottom-8 lg:-bottom-4 left-0 lg:-left-5 -translate-x-1/2 text-primary opacity-40 text-2xl`}
+                        className={`${isLg && "hidden"
+                          } left-span absolute -bottom-8 lg:-bottom-4 left-0 lg:-left-5 -translate-x-1/2 text-primary opacity-40 text-2xl`}
                       >
                         +
                       </span>
 
                       <span
-                        className={`right-span absolute -bottom-8 lg:-bottom-8 right-0 lg:-right-5 translate-x-1/2 text-primary opacity-40 text-2xl ${
-                          isRightEdgeLg ? "no-sign" : ""
-                        }`}
+                        className={`right-span absolute -bottom-8 lg:-bottom-8 right-0 lg:-right-5 translate-x-1/2 text-primary opacity-40 text-2xl ${isRightEdgeLg ? "no-sign" : ""
+                          }`}
                       >
                         +
                       </span>
 
                       <div className="overflow-hidden shadow-[0_18px_35px_-10px_rgba(0,0,0,.45)]">
-                        <PhotoView
-                          src={`/assets/images/${project.folder}/${
-                            index + 1
-                          }.jpeg`}
-                        >
+                        <PhotoView src={src}>
                           <img
-                            src={`/assets/images/${project.folder}/${
-                              index + 1
-                            }.jpeg`}
+                            src={src}
                             alt={`Slide ${index + 1}`}
                             loading="lazy"
                             decoding="async"
@@ -275,9 +326,9 @@ export default function ProjectDetails() {
                   );
                 })}
               </PhotoProvider>
-            </AnimatePresence>
+            </motion.div>
           </motion.div>
-        </motion.div>
+        </AnimatePresence>
 
         {/* ===== Footer: fade-in breve ===== */}
         <motion.div
