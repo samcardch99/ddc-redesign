@@ -59,18 +59,18 @@ const AnimatedBackground = ({ className = "" }) => {
       vw < breakpoints.sm
         ? 66
         : vw < breakpoints.md
-        ? 106
-        : vw > breakpoints.lg
-        ? 530
-        : 106;
+          ? 106
+          : vw > breakpoints.lg
+            ? 530
+            : 106;
     const getRadius = (vw) =>
       vw < breakpoints.sm
         ? 1.2
         : vw < breakpoints.md
-        ? 2.2
-        : vw > breakpoints.lg
-        ? 3.3
-        : 2.2;
+          ? 2.2
+          : vw > breakpoints.lg
+            ? 3.3
+            : 2.2;
     mountEl.style.filter = `blur(${getBlur(w)}px) brightness(0.1)`;
     mountEl.style.opacity = "0.6";
 
