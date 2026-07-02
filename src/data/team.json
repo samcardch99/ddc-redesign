@@ -14,13 +14,7 @@
     "description": "A veteran builder, Danilo turns strategy into flawless execution. He fine-tunes procurement, scheduling, and on-site workflows so our modular builds rise faster and safer. His hands-on leadership safeguards cost, quality, and compliance, delivering the operational excellence clients and investors expect from DDC.",
     "image": "assets/employees/danilo1.jpg"
   },
-  {
-    "name": "Israel Gonzalez",
-    "id": "israel_gonzalez",
-    "role": "Senior Business Developer",
-    "description": "Israel opens new doors for DDC. With keen market insight and an investor-first mindset, he scouts opportunities, negotiates strategic partnerships, and builds pipelines that fuel our modular projects. His blend of financial acumen and relationship savvy turns prospects into long-term collaborators who share DDC’s vision.",
-    "image": "assets/employees/israel.jpg"
-  },
+
   {
     "name": "Javi Ferrer",
     "id": "javi_ferrer",
@@ -132,5 +126,13 @@
     "description": "Gonzalo channels decades of on-site experience into ensuring that DDC’s vision becomes a flawlessly executed reality. He translates ambitious architectural plans into actionable daily construction tasks, maintaining momentum and clarity from groundbreaking to completion.",
     "image": "assets/employees/gonzalo.jpg",
     "class": "object-top"
-  }
+  },
+  {
+  "name": "Juan Carlos Vergara",
+  "id": "juan_carlos_vergara",
+  "role": "Superintendent",
+  "description": "Juan Carlos directs on-site construction operations, site logistics, and resource allocation for DDC Developments. He manages daily subcontractor schedules, executes QA/QC inspections, and enforces compliance with local building codes and site safety regulations. His primary focus is mitigating structural and logistical delays, validating technical execution in the field, and reporting daily site metrics to ensure project phases meet established timeline and budget parameters.",
+  "image": "assets/employees/juan_carlos.jpg",
+  "class": "object-top"
+}
 ]
