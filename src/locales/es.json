@@ -171,7 +171,9 @@
   "technology_inside": {
     "title": "Dentro del Sistema de Paneles DDC",
     "subtitle": "Qué hace diferente a DDC <0/> (construcción - primero)",
-    "button": "Reserva una intro (30 min)"
+    "button": "Reserva una intro (30 min)",
+    "images_title": "Imágenes en obra",
+    "images_subtitle": "Proyectos reales capturados en obra, desde la entrega de paneles hasta el montaje final."
   },
   "technology_statistics": {
     "1": {

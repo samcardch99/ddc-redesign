@@ -220,7 +220,9 @@
   "technology_inside": {
     "title": "Inside the DDC Panel System",
     "subtitle": "What makes DDC different <0/> (construction - first)",
-    "button": "Book 30 min Intro"
+    "button": "Book 30 min Intro",
+    "images_title": "On-Site Images",
+    "images_subtitle": "Real projects captured on site, from panel delivery to final assembly."
   },
   "technology_statistics": {
     "1": {

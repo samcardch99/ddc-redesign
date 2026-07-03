@@ -95,11 +95,11 @@ const TechnologiesInside = () => {
 
       // Condición según min-width
       let extra = 0;
-      if (window.innerWidth >= 1024) {
-        // pantallas grandes (lg+)
+      if (window.innerWidth >= 768) {
+        // pantallas tablet y grandes (md+): disposición en 3 columnas
         extra = window.innerWidth / 3;
       } else {
-        // pantallas menores a lg
+        // pantallas menores a md (mobile, contenido apilado)
         extra = window.innerWidth * 2.8;
       }
 
@@ -301,7 +301,7 @@ const TechnologiesInside = () => {
       {/* Grid absoluto (no ocupa flujo). Lo medimos con gridRef */}
       <div
         ref={gridRef}
-        className="grid grid-cols-1 grid-rows-none lg:grid-cols-3 lg:grid-rows-2 w-full lg:gap-x-28 gap-y-20 lg:gap-y-20 items-center justify-center px-8 lg:px-16  pb-16 "
+        className="grid grid-cols-1 grid-rows-none md:grid-cols-3 md:grid-rows-2 lg:grid-cols-3 lg:grid-rows-2 w-full md:gap-x-10 lg:gap-x-28 gap-y-20 md:gap-y-12 lg:gap-y-20 items-center justify-center px-8 md:px-10 lg:px-16  pb-16 "
       >
         {cards.map((card, i) => (
           <div
@@ -327,14 +327,14 @@ const TechnologiesInside = () => {
                 src={`assets/technologies/${i + 1}.jpg`}
               />
             </div>
-            <h2 className="opacity-0 scale-0 text-6xl font-bold border-b border-primary w-full text-left group-hover:scale-100  group-hover:opacity-100 transition-all duration-700 ease-in-out">
+            <h2 className="opacity-0 scale-0 text-6xl md:text-[clamp(1.5rem,3.5vw,2.5rem)] lg:text-6xl font-bold border-b border-primary w-full text-left group-hover:scale-100  group-hover:opacity-100 transition-all duration-700 ease-in-out">
               {card.number}
             </h2>
             <p
-              className="opacity-0 scale-0 w-full text-left 
+              className="opacity-0 scale-0 w-full text-left
              group-hover:scale-100 group-hover:opacity-100
-             transition-all duration-700 ease-in-out 
-             text-[clamp(0.9rem,1vw,1.25rem)]"
+             transition-all duration-700 ease-in-out
+             text-[clamp(0.9rem,1vw,1.25rem)] md:text-[clamp(0.62rem,1.4vw,0.85rem)] lg:text-[clamp(0.9rem,1vw,1.25rem)]"
             >
               {t("technology_cards." + (i + 1) + ".description")}
             </p>
@@ -392,7 +392,7 @@ const TechnologiesInside = () => {
       <div
         ref={gridRef2}
         // style={{ top: total_grid }}
-        className="stats-grid grid lg:grid-cols-3 lg:grid-rows-3 grid-flow-row lg:gap-y-10 gap-x-40 w-4/5 pt-20"
+        className="stats-grid grid md:grid-cols-3 md:grid-rows-3 lg:grid-cols-3 lg:grid-rows-3 grid-flow-row w-full md:gap-x-10 lg:gap-x-28 gap-y-20 md:gap-y-12 lg:gap-y-20 px-8 md:px-10 lg:px-16 pt-20"
       >
         {technolgies.map((tech, i) => (
           <StatisticCard
@@ -401,6 +401,44 @@ const TechnologiesInside = () => {
             description={t(`technology_statistics.${i + 1}.description`)}
           />
         ))}
+      </div>
+
+      {/* Imágenes en obra */}
+      <div className="w-full flex flex-col gap-10 px-8 md:px-10 lg:px-16 pt-20">
+        <div className="flex flex-col gap-4 justify-start items-start">
+          <h2 className="lg:text-5xl text-[2rem] lg:leading-normal leading-10 font-bold text-secondary text-left">
+            {t("technology_inside.images_title")}
+          </h2>
+          <h3 className="lg:text-xl text-secondary text-left">
+            {t("technology_inside.images_subtitle")}
+          </h3>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 w-full md:gap-x-10 lg:gap-x-28 gap-y-20 md:gap-y-12 lg:gap-y-20">
+          {[1, 2, 3, 4, 5, 6].map((n) => (
+            <div key={n} className="relative w-full aspect-[3/4]">
+              <span className="absolute -top-3 -left-3 -translate-x-1/2 -translate-y-1/2 text-secondary opacity-40 text-2xl z-10">
+                +
+              </span>
+              <span className="absolute -top-3 -right-3 translate-x-1/2 -translate-y-1/2 text-secondary opacity-40 text-2xl z-10">
+                +
+              </span>
+              <span className="absolute -bottom-3 -left-3 -translate-x-1/2 translate-y-1/2 text-secondary opacity-40 text-2xl z-10">
+                +
+              </span>
+              <span className="absolute -bottom-3 -right-3 translate-x-1/2 translate-y-1/2 text-secondary opacity-40 text-2xl z-10">
+                +
+              </span>
+              <div className="w-full h-full overflow-hidden">
+                <img
+                  src={`/assets/technologies/obra${n}.jpeg`}
+                  alt={`Obra ${n}`}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
 
       {/* Footer sticky (se pegará si existe scroll dentro de la sección) */}
