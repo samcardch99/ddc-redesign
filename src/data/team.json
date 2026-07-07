@@ -14,7 +14,14 @@
     "description": "A veteran builder, Danilo turns strategy into flawless execution. He fine-tunes procurement, scheduling, and on-site workflows so our modular builds rise faster and safer. His hands-on leadership safeguards cost, quality, and compliance, delivering the operational excellence clients and investors expect from DDC.",
     "image": "assets/employees/danilo1.jpg"
   },
-
+    {
+    "name": "Alejandro Gomez",
+    "id": "alejandro_gomez",
+    "role": "CEO Executive Assistant",
+    "description": " Alejandro is the right hand of our CEO, managing schedules, communications, and strategic priorities with precision. He ensures that every decision and initiative is executed seamlessly, supporting the leadership team in driving DDC’s vision forward.",
+    "image": "assets/employees/alejandro_gomez.jpg",
+    "class": ""
+  },
   {
     "name": "Javi Ferrer",
     "id": "javi_ferrer",
@@ -74,8 +81,8 @@
   {
     "name": "Alejandro Gomez",
     "id": "alejandro_gomez",
-    "role": "Project Manager",
-    "description": " Alejandro Gomez is a Project Manager at DDC, leading modular construction with a disciplined blend of financial rigor and on site execution. Trained as an economist, he manages construction budgets, cost control, inventory, and quality assurance across the full project lifecycle. By aligning operational cadence with precise financial oversight, Alejandro keeps projects efficient, predictable, and on budget, turning complex builds into streamlined, tightly controlled outcomes that meet DDC’s highest standards.",
+    "role": "CEO Executive Assistant",
+    "description": " Alejandro is the right hand of our CEO, managing schedules, communications, and strategic priorities with precision. He ensures that every decision and initiative is executed seamlessly, supporting the leadership team in driving DDC’s vision forward.",
     "image": "assets/employees/alejandro_gomez.jpg",
     "class": ""
   },
