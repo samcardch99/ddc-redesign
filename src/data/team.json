@@ -78,14 +78,7 @@
     "image": "assets/employees/anisleidy.jpg",
     "class": ""
   },
-  {
-    "name": "Alejandro Gomez",
-    "id": "alejandro_gomez",
-    "role": "CEO Executive Assistant",
-    "description": " Alejandro is the right hand of our CEO, managing schedules, communications, and strategic priorities with precision. He ensures that every decision and initiative is executed seamlessly, supporting the leadership team in driving DDC’s vision forward.",
-    "image": "assets/employees/alejandro_gomez.jpg",
-    "class": ""
-  },
+
   {
     "name": "Rosario Gomez",
     "id": "rosario_gomez",
