@@ -508,10 +508,6 @@
         "role": "Finance Manager",
         "description": "Mateo strengthens DDC’s financial operations through accounting management, treasury oversight, and the coordination of disbursements with financial institutions. With a focus on efficiency and control, he helps optimize processes, ensure resource availability, and support key decision making, contributing to stronger results across every project."
       },
-      "katia_vergara": {
-        "role": "Construction Estimator",
-        "description": "Our Construction Estimator is a Civil Engineer with extensive industry experience, responsible for delivering accurate, strategic, and competitive project estimates. By carefully analyzing plans, materials, labor, and timelines, she ensures each project is financially sound from the very beginning. With strong technical knowledge and real-world construction expertise, she supports cost control, value engineering, and budget optimization—helping us build efficiently, transparently, and successfully"
-      },
       "daniela_marichal": {
         "role": "Permit Runner",
         "description": "Daniela is the vital link between our projects and local authorities. She navigates the complexities of municipal bureaucracy with speed and precision, ensuring all permits and documentation are processed without delay. Her proactive coordination keeps our construction timelines on track, allowing DDC to maintain its commitment to rapid and compliant modular delivery."
@@ -519,14 +515,6 @@
       "dany_rodriguez": {
         "role": "Superintendent",
         "description": "Dany brings a keen, vigilant perspective to the construction site, transforming blueprints into physical structures with unwavering attention to detail. His watchful eyes oversee every trade, ensuring that the highest standards of quality are maintained at every phase."
-      },
-      "gonzalo_jimenez": {
-        "role": "Superintendent",
-        "description": "Gonzalo channels decades of on-site experience into ensuring that DDC’s vision becomes a flawlessly executed reality. He translates ambitious architectural plans into actionable daily construction tasks, maintaining momentum and clarity from groundbreaking to completion."
-      },
-       "juan_carlos_vergara": {
-        "role": "Superintendent",
-        "description": "Juan Carlos directs on-site construction operations, site logistics, and resource allocation for DDC Developments. He manages daily subcontractor schedules, executes QA/QC inspections, and enforces compliance with local building codes and site safety regulations. His primary focus is mitigating structural and logistical delays, validating technical execution in the field, and reporting daily site metrics to ensure project phases meet established timeline and budget parameters."
       }
     }
   },
