@@ -96,14 +96,6 @@
     "class": "object-center"
   },
   {
-    "name": "Katia Vergara Bustamante",
-    "id": "katia_vergara",
-    "role": "Construction Estimator",
-    "description": "Our Construction Estimator is a Civil Engineer with extensive industry experience, responsible for delivering accurate, strategic, and competitive project estimates. By carefully analyzing plans, materials, labor, and timelines, she ensures each project is financially sound from the very beginning. With strong technical knowledge and real-world construction expertise, she supports cost control, value engineering, and budget optimization—helping us build efficiently, transparently, and successfully",
-    "image": "assets/employees/katia.jpg",
-    "class": "object-center"
-  },
-  {
     "name": "Daniela Marichal",
     "id": "daniela_marichal",
     "role": "Permit Runner",
@@ -118,21 +110,5 @@
     "description": "Dany brings a keen, vigilant perspective to the construction site, transforming blueprints into physical structures with unwavering attention to detail. His watchful eyes oversee every trade, ensuring that the highest standards of quality are maintained at every phase.",
     "image": "assets/employees/dany.jpg",
     "class": "object-top"
-  },
-  {
-    "name": "Gonzalo Jimenez",
-    "id": "gonzalo_jimenez",
-    "role": "Superintendent",
-    "description": "Gonzalo channels decades of on-site experience into ensuring that DDC’s vision becomes a flawlessly executed reality. He translates ambitious architectural plans into actionable daily construction tasks, maintaining momentum and clarity from groundbreaking to completion.",
-    "image": "assets/employees/gonzalo.jpg",
-    "class": "object-top"
-  },
-  {
-  "name": "Juan Carlos Vergara",
-  "id": "juan_carlos_vergara",
-  "role": "Superintendent",
-  "description": "Juan Carlos directs on-site construction operations, site logistics, and resource allocation for DDC Developments. He manages daily subcontractor schedules, executes QA/QC inspections, and enforces compliance with local building codes and site safety regulations. His primary focus is mitigating structural and logistical delays, validating technical execution in the field, and reporting daily site metrics to ensure project phases meet established timeline and budget parameters.",
-  "image": "assets/employees/juan_carlos.jpg",
-  "class": "object-top"
-}
+  }
 ]
